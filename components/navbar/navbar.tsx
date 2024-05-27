@@ -3,6 +3,7 @@ import React from 'react'
 import { Logo } from './logo'
 import Actions from './actions'
 import Search from './search'
+import { ModeToggle } from '../darkModeToggle'
 
 function Navbar() {
   return (
@@ -11,6 +12,7 @@ function Navbar() {
       <Logo />
       <Search />
       <Actions />
+      <ModeToggle/>
     </nav>
   )
 }
