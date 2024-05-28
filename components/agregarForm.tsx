@@ -118,7 +118,7 @@ interface AgregarFormProps {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" >Agregar</Button>
+                <Button type="submit" >{vehiculo ? "Editar" : "Agregar"}</Button>
             </form>
         </Form>
     )
