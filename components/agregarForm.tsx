@@ -29,37 +29,52 @@ const formSchema = z.object({
     }),
 })
 
-export function AgregarForm() {
+interface AgregarFormProps {
+    vehiculo?: {
+      id: string;
+      marca: string;
+      modelo: string;
+      placa: string;
+    };
+    onSuccess?: () => void;
+  }
+
+  export function AgregarForm({ vehiculo, onSuccess }: AgregarFormProps) {
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            marca: "",
-            modelo: "",
-            placa: "",
-        },
-    })
+      resolver: zodResolver(formSchema),
+      defaultValues: vehiculo ?? {
+        marca: "",
+        modelo: "",
+        placa: "",
+      },
+    });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-
-        const response = await fetch('http://localhost:3000/vehiculo/registrar-vehiculo', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(values)
+        const url = vehiculo
+          ? `http://localhost:3000/vehiculo/${vehiculo.id}`
+          : 'http://localhost:3000/vehiculo/registrar-vehiculo';
+        const method = vehiculo ? 'PUT' : 'POST';
+    
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(values)
         });
-
+    
         if (!response.ok) {
-            console.error('Error al enviar el formulario:', response.statusText);
-            return;
+          console.error('Error al enviar el formulario:', response.statusText);
+          return;
         }
-
+    
         const data = await response.json();
         console.log('Formulario enviado con éxito:', data);
-        toast.success('Vehiculo Agregado!')
+        toast.success(vehiculo ? 'Vehiculo Actualizado!' : 'Vehiculo Agregado!');
+        onSuccess?.();
         router.push('/');
-    }
+      }
 
     return (
         <Form {...form}>
