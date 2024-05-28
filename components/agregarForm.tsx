@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import { toast } from 'react-hot-toast';
 import {
     Form,
     FormControl,
@@ -28,6 +30,7 @@ const formSchema = z.object({
 })
 
 export function AgregarForm() {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -37,9 +40,25 @@ export function AgregarForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
 
-        console.log(values)
+        const response = await fetch('http://localhost:3000/vehiculo/registrar-vehiculo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        });
+
+        if (!response.ok) {
+            console.error('Error al enviar el formulario:', response.statusText);
+            return;
+        }
+
+        const data = await response.json();
+        console.log('Formulario enviado con éxito:', data);
+        toast.success('Vehiculo Agregado!')
+        router.push('/');
     }
 
     return (
@@ -84,7 +103,7 @@ export function AgregarForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Agregar</Button>
+                <Button type="submit" >Agregar</Button>
             </form>
         </Form>
     )

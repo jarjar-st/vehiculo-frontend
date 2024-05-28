@@ -18,9 +18,7 @@ async function Actions() {
     return (
         <div className=' flex items-center justify-end gap-x-2 ml-4 lg:ml-0'>
             <div className='flex items-center gap-x-4'>
-
-                <Dialog>
-                    <DialogTrigger asChild>                
+             
                         <Button
                         size={"sm"}
                         variant={"ghost"}
@@ -29,7 +27,7 @@ async function Actions() {
                     >
 
                         <Link
-                            href={``}
+                            href={"/agregar-vehiculo"}
                         >
                             <SquarePlus
                                 className=' h-5 w-5 lg:mr-2'
@@ -39,17 +37,7 @@ async function Actions() {
                             </span>
                         </Link>
                     </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Agregar un nuevo Vehiculo</DialogTitle>
-                            <DialogDescription>
-                                Complete los campos para agregar un nuevo vehiculo
-                            </DialogDescription>
-                            <AgregarForm/>
-                        </DialogHeader>
-                    </DialogContent>
-                </Dialog>
+
 
             </div>
         </div>
