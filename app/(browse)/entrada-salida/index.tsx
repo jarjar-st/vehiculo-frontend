@@ -1,17 +1,26 @@
 "use client"
-import { Vehiculos, columns } from "./columns-es"
+import { EntradasSalidas, columns } from "./columns-es"
 import { DataTableEntradaSalida } from "./data-table-es"
 import { useState, useEffect } from 'react';
 
-async function getData(): Promise<Vehiculos[]> {
-  const response = await fetch('http://localhost:3000/vehiculo');
+async function getData(): Promise<EntradasSalidas[]> {
+  const response = await fetch('http://localhost:3000/entrada-salida/');
   const data = await response.json();
-  console.log(`ESTA ES LA DATA ${JSON.stringify(data, null, 2)}`);
-  return data;
+
+  // Reestructura los datos
+  const newData = data.map((item: any) => ({
+    ...item,
+    marca: item.Vehiculo.marca,
+    modelo: item.Vehiculo.modelo,
+    placa: item.Vehiculo.placa,
+  }));
+
+  console.log(`ESTA ES LA DATA ${JSON.stringify(newData, null, 2)}`);
+  return newData;
 }
 
 export default function EntradaSalidaTabla() {
-  const [data, setData] = useState<Vehiculos[]>([]);
+  const [data, setData] = useState<EntradasSalidas[]>([]);
 
   const loadData = async () => {
     const newData = await getData();

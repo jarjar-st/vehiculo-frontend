@@ -37,6 +37,24 @@ async function Actions() {
                             </span>
                         </Link>
                     </Button>
+                        <Button
+                        size={"sm"}
+                        variant={"ghost"}
+                        className=' text-muted-foreground hover:text-primary'
+                        asChild
+                    >
+
+                        <Link
+                            href={"/agregar-entrada-salida"}
+                        >
+                            <SquarePlus
+                                className=' h-5 w-5 lg:mr-2'
+                            />
+                            <span className=' hidden lg:block'>
+                                Agregar Entrada Salida
+                            </span>
+                        </Link>
+                    </Button>
 
 
             </div>

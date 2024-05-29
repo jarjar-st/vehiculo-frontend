@@ -18,7 +18,6 @@ export default function TablaVehiculos() {
     setData(newData);
   }
 
-  // Carga los datos cuando el componente se monta
   useEffect(() => {
     loadData();
   }, []);

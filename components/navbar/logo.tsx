@@ -29,7 +29,7 @@ export function Logo() {
                         Vehiculos
                     </p>
                     <p className=' text-xs text-muted-foreground'>
-                        ver vehiculos
+                        controla tus vehiculos
                     </p>
                 </div>
             </div>
